@@ -15,7 +15,7 @@
 
 This file structure has a specific purpose. So you have to implement all the required over it. Later when we get to OPP and MySQL we will refactor the project to get it more sophisticated, modern and cleaner. Please take care of it!!
 
-```
+```sh
 assets/
 resources/
 src/
@@ -38,7 +38,7 @@ A file called `Model` implements a database layer is a file which interacts dire
 
 We also added the concept of `Helper` which is a class which its finality is to help `Controllers` and `Managers` to be lighter and to keep single responsibility.
 
-```
+```php
 index.php // which is the entry point of the application. The login view
 employeeController.php // file which has JUST the php code to handle employees request
 employeeManager.php // In this file we left you a list of named mehtods to implement and use.
@@ -57,7 +57,7 @@ As you have seen in JS there are sentences to import code from other files to th
 
 So for instance a dashboard.php page can look like this at the beginning of the file:
 
-```
+```php
  <?php
 include "./library/sessionHelper.php";  // we added the code of the helper to check session
 
@@ -72,7 +72,7 @@ include "../assets/html/header.html"; // the header file that we also include it
 So when the server returns the processed file, PHP has changed all `include` sentences by the code that is on that files.
 Let's make it clearer. Let's say that we have a sessionHelper which has this code.
 
-```
+```php
 session_start();
 if(isset($_SESSION['userId'])) {
     if(time() - $_SESSION['time'] > $_SESSION['lifeTime']) {
@@ -86,7 +86,7 @@ if(isset($_SESSION['userId'])) {
 
 And we want to include it on every page user visits in order to check if his session is still valid. We just need to do this to include it for instance on `dashboard.php` file.
 
-```
+```php
 <?php include "./library/sessionHelper.php";?>
 
 <div id="alert" class="alert alert-danger w-25 mx-auto text-center" data-dismiss="alert" aria-label="Close" role="alert"></div>
@@ -103,7 +103,7 @@ The employees are stored `resouces/employees.json` file you have to make a CRUD 
 
 You should follow with coherence the project structure we give you and when you add files or functions make them self-descriptive. As you could see in the methodology we left on the project.
 
-```
+```php
 $data = getAllData($id); // get employee data
 $employee = getEmployee($id);// just reading we know that gets employee by id, cool! and clean!
 ```
@@ -112,7 +112,7 @@ The functions you create have to be coherent, the naming is a serious affair. Yo
 
 Same thing for variables, it is really important to give proper names.
 
-```
+```php
 $data = "John";
 $name = 'John;// no words needed
 ```
@@ -148,7 +148,7 @@ To play a little with it, You can create a script in the root folder of your web
 
 #### Basic knowledge
 
-```
+```php
 <?php
 curl_init();      // initializes a session
 curl_setopt();    // changes the session behavior setting options
@@ -158,14 +158,14 @@ curl_close();     // closes the session and deletes data made by curl_init();
 
 #### Adding headers to request
 
-```
+```php
 curl_setopt($curlHandler, CURLOPT_HTTPHEADER, array(
  'Header-Key: Header-Value', 'X-API-KEY: 5d17e5de89a3e35d3902c4d667534'));
 ```
 
 #### Getting error messages from cUrl
 
-```
+```php
 $curlHandler = curl_init('https://hostname.com/resource/');
 curl_setopt($curlHandler, CURLOPT_RETURNTRANSFER, true);
 
@@ -177,7 +177,7 @@ if(curl_exec($curlHandler) === false)
 
 #### Get Request
 
-```
+```php
 <?php
 
 $curlHandler = curl_init();
@@ -194,7 +194,7 @@ $decodedResponse = json_decode($apiResponse);
 
 #### Post Request
 
-```
+```php
 <?php
 
 $postData = [
@@ -213,7 +213,7 @@ $decodedResponse = json_decode($apiResponse);
 
 #### Post Request
 
-```
+```php
 <?php
 
 $postData = [
@@ -232,7 +232,7 @@ $decodedResponse = json_decode($apiResponse);
 
 #### Delete Request
 
-```
+```php
 $curlHandler = curl_init('http://hostname.com/api/resource');
 curl_setopt($curlHandler, CURLOPT_CUSTOMREQUEST, 'DELETE');// Setting HTTP verb that will by used for the request
 
@@ -245,7 +245,7 @@ $decodedResponse = json_decode($apiResponse);
 
 #### All together
 
-```
+```php
 $postData = [
  'parameter1' => 'foo', 'parameter2' => 'bar'];
 
