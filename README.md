@@ -1,19 +1,71 @@
-# PHP BASIC APPLICATION TO MANAGE AN EMPLOYEES LIST
 
-## Application main points
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+`#html` `#css` `#js` `#php`  `#basics`  `#master-in-software-engineering`
 
-1. Login and logout with a json file as user storage
-2. Controlled user session set to 10 minutes
-3. Show data from a JSON in a JS Grid
-4. Pagination of the data configured by the grid
-5. Employees CRUD Create Read Delete and Update with a json file as employees storage
-6. Employee page with employee detail
-7. External web service to get employees images
-8. Employee avatar through web service images
+# PHP Employee Management v1<!-- omit in toc -->
 
-### File structure
+>This project is part of the Master in Software Development. The objective was to create an application able to manage a json with all the employees from a company.
+ ### Main functionality:
+- Login and logout with a json file as user storage
+-  Controlled user session set to 10 minutes
+- Show data from a JSON in a JS Grid
+- Pagination of the data configured by the grid
+- Employees CRUD Create Read Delete and Update with a json file as employees storage
+- Employee page with employee detail
+- External web service to get employees images
+- Employee avatar through web service images  
+- 
+## Index <!-- omit in toc -->
+- [Where to start?](#where-to-start?)
+- [Requirements](#requirements)
+- [Install](#install)
+- [Deployment](#deployment)
+- [Documentation](#documentation)
+- [Project structure](#project-structure)
+- [Tools and tecnologies used](#tools-and-tecnologies-used)
+- [How to use](#how-to-use)
+- [Project requirements](#project-requirements)
+- [Resources](#resources)
 
-This file structure has a specific purpose. So you have to implement all the required over it. Later when we get to OPP and MySQL we will refactor the project to get it more sophisticated, modern and cleaner. Please take care of it!!
+## Where to start?🚀
+
+### Requirements📋
+
+To run this project you need yo have XAMPP installed in your PC (or MUMP in the case of Mac users). For more information about XAMPP visit [their website](https://www.apachefriends.org/es/index.html).
+
+### Install🔧
+
+To clone this repository you have make in terminal:
+
+```
+git clone https://github.com/mhfortuna/php-employee-management-v1.git
+```
+Then you need to copy this folder to `htdocs` or change the server root variable.
+
+## Deployment📦
+
+To open the file explorer just open a browser and go to [localhost](localhost)
+You'll have to login, the credentials are:
+```
+email: admin@assemblerschool.com
+pass: 123456
+```
+
+## How to use 💻
+
+### Dashboard page
+After you have logged in the application you'll see a grid with some of the employees data. From there you can add new employees or delete them. If you double click on an employee you can see more data in a new page called the **employee page**. If you press on the employee icon it will redirect you to the **employee page** too, but this time you'll have a form to create a new employee.
+
+### Employee page
+This page renders conditionaly of how you accesed it:
+- Case 1 - double click on employee from dashboard:
+In this view you will see the available employee data, and you can update any of the fields. It the `id` doesn't exist it will show an error and redirect you to the dashboard.
+- Case 3 - Click on the employee icon from dashboard:
+In this view you'll see the empty form to create a new employee. There are mandatory fields to fill. When you submit the new employee it will show a modal and redirect you to the dashboard.
+
+## Project structure 📁
 
 ```
 assets/
@@ -28,236 +80,70 @@ src/
 - Src folder contains PHP files which contain HTML or JS
 - Src/library folder contains PHP files that contain just PHP
 
-**We left to you the project files in their folders to give you a structure which we want you to work with in order to later refactor it.**
+
 
 We use some naming conventions when create code files. For instance a file which handles HTTP request we name it as `Controller`.
 
 In the other hand we have also the concept of `Manager` which typically implements an abstraction layer over a storage system, in this case as we are going to work with json files for a while (bear on mind later we refactor it to MySQL and then we will also have a `Model` file) we would need to create on it all functions we need to access the json file.
 
-A file called `Model` implements a database layer is a file which interacts directly with a Database. **On future projects we will refactor this project to add Models and much more!!**
-
-We also added the concept of `Helper` which is a class which its finality is to help `Controllers` and `Managers` to be lighter and to keep single responsibility.
-
-```
-index.php // which is the entry point of the application. The login view
-employeeController.php // file which has JUST the php code to handle employees request
-employeeManager.php // In this file we left you a list of named mehtods to implement and use.
-
-loginController.php // here you need to handle all HTTP request of login things
-loginManager.php // same thing here you need to write things as login validation logout etc..
-
-sessionHelper.php // here you can add the code to check if the user session has expired.
-```
-
-The sessionHelper file need to be added to each page we visit in order to check if the user session has expired and if so to call the methods of the loginManager to logout the admin user.
-
-### Including or importing code files to current file
-
-As you have seen in JS there are sentences to import code from other files to the current file we are working. In PHP happens the same thing. And as we want to encapsulate code by concepts( the login page request are managed by a loginController and so on) it is required to import files.
-
-So for instance a dashboard.php page can look like this at the beginning of the file:
-
-```
- <?php
-include "./library/sessionHelper.php";  // we added the code of the helper to check session
-
-include "../assets/html/header.html"; // the header file that we also include it on every page
-?>
-<div id="alert" class="alert alert-danger w-25 mx-auto text-center" data-dismiss="alert" aria-label="Close" role="alert"></div>
-<div id="employeesGrid" class="ml-5"></div>
-<script>
-..............
-```
-
-So when the server returns the processed file, PHP has changed all `include` sentences by the code that is on that files.
-Let's make it clearer. Let's say that we have a sessionHelper which has this code.
-
-```
-session_start();
-if(isset($_SESSION['userId'])) {
-    if(time() - $_SESSION['time'] > $_SESSION['lifeTime']) {
-        logout();
-		....
-  }
-} else {
-	.....
-}
-```
-
-And we want to include it on every page user visits in order to check if his session is still valid. We just need to do this to include it for instance on `dashboard.php` file.
-
-```
-<?php include "./library/sessionHelper.php";?>
-
-<div id="alert" class="alert alert-danger w-25 mx-auto text-center" data-dismiss="alert" aria-label="Close" role="alert"></div>
-..............
-```
-
-So what we have done is to include literally that `if else` of the helper at the top of the `dashboard.php` file. We can do this with all files we need.
-
-### Project key points
-
 The user is stored in `resouces/users.json` file there you have an admin user work with it.
 
 The employees are stored `resouces/employees.json` file you have to make a CRUD over this file
 
-You should follow with coherence the project structure we give you and when you add files or functions make them self-descriptive. As you could see in the methodology we left on the project.
+## Tools and tecnologies used 🛠️
 
-```
-$data = getAllData($id); // get employee data
-$employee = getEmployee($id);// just reading we know that gets employee by id, cool! and clean!
-```
+* PHP
+* HTML
+* CSS
+* JavaScript
+* jQuery
+* jsGrid
+* Bootstrap 
 
-The functions you create have to be coherent, the naming is a serious affair. You can write in such a way that everything describes itself.
+## Project requirements 📏
 
-Same thing for variables, it is really important to give proper names.
+- All code included comments need to be write in English
+- Use a code style like camelCase
+- HTML never use inline styles
+- It is recommended to divide the tasks into several subtasks so that you can associate each particular step of the construction with a specific commit
+- You should try as much as possible that the commits and planned tasks are the same
+ - You must create a correctly documented README.md file in the root directory of the project (see guidelines in Resources)
 
-```
-$data = "John";
-$name = 'John;// no words needed
-```
+## Resources
 
-And yeah! also same thing for every file you create give sense and coherence to it.
+- [File system](https://es.wikipedia.org/wiki/Administrador_de_archivos)
+- [PHP FileSystem W3C](https://www.w3schools.com/php/php_ref_filesystem.asp)
+- [PHP FileSystem Oficial](https://www.php.net/manual/es/book.filesystem.php)
+- [README Guidelines Example](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
+-  [What can PHP do?](https://www.php.net/manual/es/intro-whatcando.php)
 
-[About naming](https://dzone.com/articles/naming-conventions-from-uncle-bobs-clean-code-phil)
+-  [Sample guide for README](https://gist.github.com/Villanuevand/6386899f70346d4580c723232524d35a)
 
-## External libraries
+-  [XAMPP](https://www.apachefriends.org/es/index.html)
 
-All them must be installed with the npm here you have a package.json take a look please.
+-  [How to install XAMPP on Windows](https://www.youtube.com/watch?v=h6DEDm7C37A)
 
-- [Bootstrap](https://getbootstrap.com/)
-- [Bootstrap icons](https://icons.getbootstrap.com/)
-- [JSGrid](http://js-grid.com/)
+-  [What is a web server?](https://www.youtube.com/watch?v=Yt1nesKi5Ec)
 
-## Images Web Service for the extra feature
+-  [Web server basics](https://www.youtube.com/watch?v=3VqfpVKvlxQ)
 
-As we explained in the pdf document of this project we will use [this images api](https://uifaces.co/)
+## Contributors ✨
 
-This web service in the version free that is which we are going to use has limitations. Five request per minute or thirty in an hour.  
-So if you want to develop this extra feature it would be cool to have a mocked response to develop at ease. So for this purpose we left in `resources/` folder a file called images_mock which can be used to the implementation of the extra feature once you have your code running well you need to remove this mock and to connect directly with the web service.
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
-[Read the doc!](https://uifaces.co/api-docs)
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/gs89alberto"><img src="https://avatars.githubusercontent.com/u/80328331?v=4?s=100" width="100px;" alt=""/><br /><sub><b>gs89alberto</b></sub></a><br /><a href="https://github.com/mhfortuna/php-employee-management-v1/commits?author=gs89alberto" title="Code">💻</a> <a href="#design-gs89alberto" title="Design">🎨</a> <a href="#ideas-gs89alberto" title="Ideas, Planning, & Feedback">🤔</a> <a href="#projectManagement-gs89alberto" title="Project Management">📆</a></td>
+    <td align="center"><a href="https://github.com/mhfortuna"><img src="https://avatars.githubusercontent.com/u/66578026?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Mathias Fortuna</b></sub></a><br /><a href="https://github.com/mhfortuna/php-employee-management-v1/commits?author=mhfortuna" title="Code">💻</a> <a href="#design-mhfortuna" title="Design">🎨</a> <a href="#ideas-mhfortuna" title="Ideas, Planning, & Feedback">🤔</a> <a href="#projectManagement-mhfortuna" title="Project Management">📆</a></td>
+  </tr>
+</table>
 
-## Curl
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
 
-In php we interact with HTTP web services through cUrl or client URL.  
-This is also a command in Unix systems. We are going to give you an over view in order to familiarise with it and then use it in the application for the extra feature.
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
-To play a little with it, You can create a script in the root folder of your web server and with these request we have here to try make GET, POST. PUT and DELETE request against this super cool service which ables to developer to post and get data from what we call a request bin.  
-[ReqBin ](https://reqbin.com/curl)
-
-#### Basic knowledge
-
-```
-<?php
-curl_init();      // initializes a session
-curl_setopt();    // changes the session behavior setting options
-curl_exec();      // executes the started session
-curl_close();     // closes the session and deletes data made by curl_init();
-```
-
-#### Adding headers to request
-
-```
-curl_setopt($curlHandler, CURLOPT_HTTPHEADER, array(
- 'Header-Key: Header-Value', 'X-API-KEY: 5d17e5de89a3e35d3902c4d667534'));
-```
-
-#### Getting error messages from cUrl
-
-```
-$curlHandler = curl_init('https://hostname.com/resource/');
-curl_setopt($curlHandler, CURLOPT_RETURNTRANSFER, true);
-
-if(curl_exec($curlHandler) === false)
-{
- echo 'Curl error: ' . curl_error($curlHandler); //gets last cUrl error as a string
-}
-```
-
-#### Get Request
-
-```
-<?php
-
-$curlHandler = curl_init();
-
-curl_setopt($curlHandler, CURLOPT_URL, 'https://hostname.com/resource');
-curl_setopt($curlHandler, CURLOPT_RETURNTRANSFER, true);
-
-$apiResponse = curl_exec($curlHandler);
-curl_close($curlHandler);
-
-$decodedResponse = json_decode($apiResponse);
-
-```
-
-#### Post Request
-
-```
-<?php
-
-$postData = [
- 'parameter1' => 'foo', 'parameter2' => 'bar'];
-
-$curlHandler = curl_init('http://hostname.com/api/resource');
-curl_setopt($curlHandler, CURLOPT_POSTFIELDS, $postData);
-curl_setopt($curlHandler, CURLOPT_RETURNTRANSFER, true);// saying cUrl to return the response in the cUrl exec call
-
-$apiResponse = curl_exec($curlHandler);
-curl_close($curlHandler);
-
-$decodedResponse = json_decode($apiResponse);
-
-```
-
-#### Post Request
-
-```
-<?php
-
-$postData = [
- 'parameter1' => 'foo', 'parameter2' => 'bar'];
-
-$curlHandler = curl_init('http://hostname.com/api/resource');
-curl_setopt($curlHandler, CURLOPT_POSTFIELDS, $postData);
-curl_setopt($curlHandler, CURLOPT_RETURNTRANSFER, true);// saying cUrl to return the response in the cUrl exec call
-
-$apiResponse = curl_exec($curlHandler);
-curl_close($curlHandler);
-
-$decodedResponse = json_decode($apiResponse);
-
-```
-
-#### Delete Request
-
-```
-$curlHandler = curl_init('http://hostname.com/api/resource');
-curl_setopt($curlHandler, CURLOPT_CUSTOMREQUEST, 'DELETE');// Setting HTTP verb that will by used for the request
-
-$apiResponse = curl_exec($curlHandler);
-$httpCode = curl_getinfo($curlHandler, CURLINFO_HTTP_CODE);// Getting http response code
-curl_close($curlHandler);
-
-$decodedResponse = json_decode($apiResponse);
-```
-
-#### All together
-
-```
-$postData = [
- 'parameter1' => 'foo', 'parameter2' => 'bar'];
-
-$curlHandler = curl_init('http://hostname.com/api/resource');
-curl_setopt($curlHandler, CURLOPT_POSTFIELDS, $postData);
-curl_setopt($curlHandler, CURLOPT_RETURNTRANSFER, true);// saying cUrl to return the response in the cUrl exec call
-
-$apiResponse = curl_exec($curlHandler);
-if (curl_errno($curlHandler)) {
- $errorMessage = curl_error($curlHandler);
- //throw error}
-curl_close($curlHandler);
-
-$decodedResponse = json_decode($apiResponse);
-```
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

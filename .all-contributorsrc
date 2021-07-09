@@ -1,0 +1,39 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "gs89alberto",
+      "name": "gs89alberto",
+      "avatar_url": "https://avatars.githubusercontent.com/u/80328331?v=4",
+      "profile": "https://github.com/gs89alberto",
+      "contributions": [
+        "code",
+        "design",
+        "ideas",
+        "projectManagement"
+      ]
+    },
+    {
+      "login": "mhfortuna",
+      "name": "Mathias Fortuna",
+      "avatar_url": "https://avatars.githubusercontent.com/u/66578026?v=4",
+      "profile": "https://github.com/mhfortuna",
+      "contributions": [
+        "code",
+        "design",
+        "ideas",
+        "projectManagement"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "php-employee-management-v1",
+  "projectOwner": "mhfortuna",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}

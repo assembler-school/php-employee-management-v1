@@ -1,0 +1,25 @@
+.login-container{
+    height: 100vh;
+}
+.login-form{
+    height: 50%;
+    width: 50%;
+    background:#282726;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+.login-form h3{
+    text-align: center;
+    color:#fff;
+}
+.btnSubmit{
+    font-weight: 600;
+    width: 50%;
+    color: #282726;
+    background-color: #fff;
+    border: none;
+    border-radius: 1.5rem;
+    padding:2%;
+}
+.btnSubmit:hover{
+    background-color: aqua;
+}
